@@ -9,7 +9,8 @@
         p {{searchMessage}}
      .container.results
       .columns
-        .column(v-for="t in tracks") {{t.name}} - {{t.artist}}
+        .column(v-for="t in tracks")
+          | {{t.name}} - {{t.artists[0].name}}
 
 </template>
 
@@ -34,10 +35,11 @@ export default {
     }
   },
   methods: {
-    search () {
+    search: function () {
+      /* var obj = this */
       trackService.search(this.searchQuery)
-        .then(function (res) {
-          console.log(res)
+        .then(res => {
+          this.tracks = res.tracks.items
         })
     }
   }
